@@ -84,7 +84,7 @@ namespace GildedRoseKata
                 && item.Name != "Sulfuras, Hand of Ragnaros").ToList();
             foreach (var item in normalItems)
             {
-                if (item.SellIn > 0)
+                if (item.SellIn > 0 && !item.Name.StartsWith("Conjured"))
                     item.Quality -= 1;
                 else
                     item.Quality -= 2;

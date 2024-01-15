@@ -158,6 +158,20 @@ namespace GildedRoseTests
             Assert.Equal(5, normalItem.SellIn);
         }
 
+        [Fact]
+        public void UpdateQuality_DecresesQualityBy2ForConjuredItem()
+        {
+            // Arrange
+            var normalItem = new Item { Name = "Conjured Some Item", SellIn = 5, Quality = 15 };
+            var gildedRose = new GildedRose(new List<Item> { normalItem });
+
+            // Act
+            gildedRose.UpdateQuality();
+
+            // Assert
+            Assert.Equal(13, normalItem.Quality);
+        }
+
 
     }
 
