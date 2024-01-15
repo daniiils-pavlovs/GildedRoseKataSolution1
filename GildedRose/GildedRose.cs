@@ -14,25 +14,28 @@ namespace GildedRoseKata
 
         public void UpdateQuality()
         {
-            var normalItems = Items.Where(item => item.Name != "Aged Brie" 
-                && item.Name != "Backstage passes to a TAFKAL80ETC concert"
-                && item.Name != "Sulfuras, Hand of Ragnaros").ToList();
-            foreach (var item in normalItems)
+            UpdateNormalItemQuality();
+            UpdatedSpecialItemsQuality();
+            UpdateSellIn();
+
+        }
+
+        private void UpdateSellIn()
+        {
+            var itemsToUpdateSellIn = Items.Where(item => item.Name != "Sulfuras, Hand of Ragnaros").ToList();
+            foreach (var item in itemsToUpdateSellIn)
             {
-                if (item.SellIn > 0)
-                    item.Quality -= 1;
-                else
-                    item.Quality -= 2;
-
-                if (item.Quality < 0)
-                    item.Quality = 0;
+                item.SellIn -= 1;
             }
+        }
 
+        private void UpdatedSpecialItemsQuality()
+        {
             var specialItems = Items.Where(item => item.Name == "Aged Brie"
-                || item.Name == "Backstage passes to a TAFKAL80ETC concert").ToList();
+                            || item.Name == "Backstage passes to a TAFKAL80ETC concert").ToList();
             foreach (var item in specialItems)
             {
-                switch (item.Name) 
+                switch (item.Name)
                 {
                     case "Aged Brie":
                         if (item.SellIn <= 0)
@@ -72,11 +75,22 @@ namespace GildedRoseKata
                     item.Quality = 50;
                 }
             }
+        }
 
-            var itemsToUpdateSellIn = Items.Where(item => item.Name != "Sulfuras, Hand of Ragnaros").ToList();
-            foreach (var item in itemsToUpdateSellIn)
+        private void UpdateNormalItemQuality()
+        {
+            var normalItems = Items.Where(item => item.Name != "Aged Brie"
+                && item.Name != "Backstage passes to a TAFKAL80ETC concert"
+                && item.Name != "Sulfuras, Hand of Ragnaros").ToList();
+            foreach (var item in normalItems)
             {
-                item.SellIn -= 1;
+                if (item.SellIn > 0)
+                    item.Quality -= 1;
+                else
+                    item.Quality -= 2;
+
+                if (item.Quality < 0)
+                    item.Quality = 0;
             }
         }
     }
