@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace GildedRoseKata
 {
@@ -12,19 +13,18 @@ namespace GildedRoseKata
 
         public void UpdateQuality()
         {
+            var normalItems = Items.Where(item => item.Name != "Aged Brie" 
+                && item.Name != "Backstage passes to a TAFKAL80ETC concert"
+                && item.Name != "Sulfuras, Hand of Ragnaros").ToList();
+            foreach (var item in normalItems)
+            {
+                if (item.Quality > 0)
+                    item.Quality = item.Quality - 1;
+            }
+
             for (var i = 0; i < Items.Count; i++)
             {
-                if (Items[i].Name != "Aged Brie" && Items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
-                {
-                    if (Items[i].Quality > 0)
-                    {
-                        if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
-                        {
-                            Items[i].Quality = Items[i].Quality - 1;
-                        }
-                    }
-                }
-                else
+                if (Items[i].Name == "Aged Brie" || Items[i].Name == "Backstage passes to a TAFKAL80ETC concert")
                 {
                     if (Items[i].Quality < 50)
                     {
