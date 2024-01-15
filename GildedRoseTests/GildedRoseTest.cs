@@ -89,6 +89,7 @@ namespace GildedRoseTests
             // Assert
             Assert.Equal(0, backstagePasses.Quality);
         }
+       
         [Fact]
         public void UpdateQuality_ItemQualitySetTo50_WhenIncreasedOver50()
         {
@@ -99,6 +100,20 @@ namespace GildedRoseTests
             gildedRose.UpdateQuality();
             Assert.Equal(50, item.Quality);
 
+        }
+
+        [Fact]
+        public void UpdateQuality_ItemQualityIs0_CantDecreaseFurther()
+        {
+            // Arrange
+            var normalItem = new Item { Name = "Some Item", SellIn = 5, Quality = 0 };
+            var gildedRose = new GildedRose(new List<Item> { normalItem });
+
+            // Act
+            gildedRose.UpdateQuality();
+
+            // Assert
+            Assert.Equal(0, normalItem.Quality);
         }
 
 
