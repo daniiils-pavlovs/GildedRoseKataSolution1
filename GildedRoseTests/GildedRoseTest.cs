@@ -33,6 +33,75 @@ namespace GildedRoseTests
             // Assert
             Assert.Equal(11, agedBrie.Quality);
         }
+
+        [Fact]
+        public void UpdateQuality_IncreasesQualityForBackstagePasses_WithMoreThan10Days()
+        {
+            // Arrange
+            var backstagePasses = new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 15, Quality = 10 };
+            var gildedRose = new GildedRose(new List<Item> { backstagePasses });
+
+            // Act
+            gildedRose.UpdateQuality();
+
+            // Assert
+            Assert.Equal(11, backstagePasses.Quality);
+        }
+
+        [Fact]
+        public void UpdateQuality_IncreasesQualityForBackstagePasses_With10DaysOrLess()
+        {
+            // Arrange
+            var backstagePasses = new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 10, Quality = 10 };
+            var gildedRose = new GildedRose(new List<Item> { backstagePasses });
+
+            // Act
+            gildedRose.UpdateQuality();
+
+            // Assert
+            Assert.Equal(12, backstagePasses.Quality);
+        }
+
+        [Fact]
+        public void UpdateQuality_IncreasesQualityForBackstagePasses_With5DaysOrLess()
+        {
+            // Arrange
+            var backstagePasses = new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 5, Quality = 10 };
+            var gildedRose = new GildedRose(new List<Item> { backstagePasses });
+
+            // Act
+            gildedRose.UpdateQuality();
+
+            // Assert
+            Assert.Equal(13, backstagePasses.Quality);
+        }
+
+        [Fact]
+        public void UpdateQuality_DropsQualityToZeroForBackstagePasses_AfterConcert()
+        {
+            // Arrange
+            var backstagePasses = new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 0, Quality = 10 };
+            var gildedRose = new GildedRose(new List<Item> { backstagePasses });
+
+            // Act
+            gildedRose.UpdateQuality();
+
+            // Assert
+            Assert.Equal(0, backstagePasses.Quality);
+        }
+        [Fact]
+        public void UpdateQuality_ItemQualitySetTo50_WhenIncreasedOver50()
+        {
+            var item = new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 10, Quality = 50 };
+            var gildedRose = new GildedRose(new List<Item> { item });
+
+            // Act
+            gildedRose.UpdateQuality();
+            Assert.Equal(50, item.Quality);
+
+        }
+
+
     }
 
 }
