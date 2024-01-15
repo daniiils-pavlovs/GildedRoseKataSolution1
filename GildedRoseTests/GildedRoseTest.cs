@@ -35,6 +35,20 @@ namespace GildedRoseTests
         }
 
         [Fact]
+        public void UpdateQuality_IncreasesQualityBy2ForAgedBrie_WhenSellInIsNegative()
+        {
+            // Arrange
+            var agedBrie = new Item { Name = "Aged Brie", SellIn = -1, Quality = 10 };
+            var gildedRose = new GildedRose(new List<Item> { agedBrie });
+
+            // Act
+            gildedRose.UpdateQuality();
+
+            // Assert
+            Assert.Equal(12, agedBrie.Quality);
+        }
+
+        [Fact]
         public void UpdateQuality_IncreasesQualityForBackstagePasses_WithMoreThan10Days()
         {
             // Arrange
