@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Linq;
 
 namespace GildedRoseKata
 {
@@ -69,16 +70,13 @@ namespace GildedRoseKata
                 if (item.Quality > 50)
                 {
                     item.Quality = 50;
-                }    
+                }
             }
 
-            for (var i = 0; i < Items.Count; i++)
+            var itemsToUpdateSellIn = Items.Where(item => item.Name != "Sulfuras, Hand of Ragnaros").ToList();
+            foreach (var item in itemsToUpdateSellIn)
             {
-                if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
-                {
-                    Items[i].SellIn = Items[i].SellIn - 1;
-                }
-
+                item.SellIn -= 1;
             }
         }
     }

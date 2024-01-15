@@ -130,6 +130,34 @@ namespace GildedRoseTests
             Assert.Equal(0, normalItem.Quality);
         }
 
+        [Fact]
+        public void UpdateQuality_DecreasesSellInForItem()
+        {
+            // Arrange
+            var normalItem = new Item { Name = "Some Item", SellIn = 5, Quality = 0 };
+            var gildedRose = new GildedRose(new List<Item> { normalItem });
+
+            // Act
+            gildedRose.UpdateQuality();
+
+            // Assert
+            Assert.Equal(4, normalItem.SellIn);
+        }
+
+        [Fact]
+        public void UpdateQuality_DoNotDecreasesSellInForSulfurasItem()
+        {
+            // Arrange
+            var normalItem = new Item { Name = "Sulfuras, Hand of Ragnaros", SellIn = 5, Quality = 0 };
+            var gildedRose = new GildedRose(new List<Item> { normalItem });
+
+            // Act
+            gildedRose.UpdateQuality();
+
+            // Assert
+            Assert.Equal(5, normalItem.SellIn);
+        }
+
 
     }
 
